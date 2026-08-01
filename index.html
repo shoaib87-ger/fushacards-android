@@ -5,18 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Beide Farbschemata ankündigen, damit der Browser Formulare/Scrollbalken passend färbt -->
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#f6f2e8" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#171511" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f6f2e8">
 <title>FushaCards für Android — Download</title>
-<!-- Vorschau beim Teilen (WhatsApp & Co.) — absolute URLs, erst seit dem
-     Anlegen des oeffentlichen Repos bekannt. -->
-<link rel="canonical" href="https://shoaib87-ger.github.io/fushacards-android/">
-<meta property="og:type" content="website">
-<meta property="og:title" content="FushaCards für Android">
-<meta property="og:description" content="Deutsch-Arabisch Vokabelkarten aus deinem eigenen Lernmaterial — kostenloser Download.">
-<meta property="og:url" content="https://shoaib87-ger.github.io/fushacards-android/">
-<meta property="og:image" content="https://shoaib87-ger.github.io/fushacards-android/icon-1024.png">
-<meta name="twitter:card" content="summary">
 <meta name="description" content="FushaCards für Android herunterladen — die deutsch-arabische Karteikarten-App. Lehrbuchseite fotografieren, Vokabeln im richtigen Moment wiederholen.">
 <link rel="icon" href="./icon-1024.png">
 <style>
@@ -61,26 +51,8 @@
   --grain-opacity:.05;
   --grain-blend:multiply;
 }
-@media (prefers-color-scheme: dark){
-  :root{
-    --c-bg:#171511;
-    --c-bg-elevated:#201d17;
-    --c-ink:#f0e7d2;
-    --c-ink-muted:#a89f85;
-    --c-ink-soft:#6e6752;
-    --c-border:#2f2b20;
-    /* Im Dunkeln trägt Olive nicht mehr — wie in der App wird Gold
-       zur Aktionsfarbe, dunkle Tinte darauf. */
-    --c-primary:#c6b07a;
-    --c-primary-ink:#1c1a12;
-    --c-accent:#e0b85f;
-    --c-shadow:0 14px 40px rgba(0,0,0,.5);
-    --c-hairline:rgba(240,231,210,.14);
-    --c-glow:rgba(224,184,95,.13);
-    --grain-opacity:.075;
-    --grain-blend:overlay;
-  }
-}
+/* Die Seite ist BEWUSST nur hell — Wunsch des Inhabers (01.08.):
+   Sie soll immer im Markenhell oeffnen, unabhaengig vom Systemmodus. */
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{
@@ -145,7 +117,7 @@ a{color:inherit}
   font-size:44px;line-height:1.05;letter-spacing:-.02em}
 .wm span{color:var(--c-accent)}
 .dev{margin-top:4px;font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--c-primary)}
-@media (prefers-color-scheme: dark){ .dev{color:var(--c-accent)} }
+
 .tagline{margin-top:6px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;
   font-weight:500;font-size:19px;color:var(--c-ink-muted)}
 
