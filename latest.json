@@ -1,0 +1,12 @@
+{
+  "versionName": "2.2.1",
+  "versionCode": 1,
+  "apkUrl": "./downloads/FushaCards.apk",
+  "sizeMb": 21,
+  "date": "2026-08-01",
+  "notes": {
+    "de": "Erste Android-Version: kompletter Funktionsumfang der iPhone-App — Karten scannen, FSRS-Wiederholung, Hörmodus, Qur'an-Modul, drei Sprachen.",
+    "en": "First Android release: the full iPhone feature set — scan cards, FSRS review, listening mode, Qur'an module, three languages.",
+    "es": "Primera versión para Android: todas las funciones del iPhone — escanear tarjetas, repaso FSRS, modo audio, módulo del Corán, tres idiomas."
+  }
+}

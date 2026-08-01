@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Beide Farbschemata ankündigen, damit der Browser Formulare/Scrollbalken passend färbt -->
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f2e8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#171511" media="(prefers-color-scheme: dark)">
+<title>FushaCards für Android — Download</title>
+<!-- Vorschau beim Teilen (WhatsApp & Co.) — absolute URLs, erst seit dem
+     Anlegen des oeffentlichen Repos bekannt. -->
+<link rel="canonical" href="https://shoaib87-ger.github.io/fushacards-android/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FushaCards für Android">
+<meta property="og:description" content="Deutsch-Arabisch Vokabelkarten aus deinem eigenen Lernmaterial — kostenloser Download.">
+<meta property="og:url" content="https://shoaib87-ger.github.io/fushacards-android/">
+<meta property="og:image" content="https://shoaib87-ger.github.io/fushacards-android/icon-1024.png">
+<meta name="twitter:card" content="summary">
+<meta name="description" content="FushaCards für Android herunterladen — die deutsch-arabische Karteikarten-App. Lehrbuchseite fotografieren, Vokabeln im richtigen Moment wiederholen.">
+<link rel="icon" href="./icon-1024.png">
+<style>
+/* ============================================================
+ * FushaCards — Download-Seite für Android
+ * Eine Datei, keine Abhängigkeiten: Die Seite liegt später in
+ * einem EIGENEN öffentlichen Repo (GitHub Pages) und darf sich
+ * auf nichts außerhalb ihres Ordners verlassen — deshalb liegen
+ * Fonts und Icon lokal daneben, keine CDNs.
+ * Gestaltung nach der bestehenden Marke (web/styles.css,
+ * tools/share/bild1+2): Olive/Gold/Creme, Satzspiegel mit
+ * Haarlinien, Cormorant als Display, DM Sans als Text, Amiri
+ * für die arabischen Akzente.
+ * ============================================================ */
+
+/* Nur die Schnitte, die die Seite wirklich benutzt — hält den
+   ersten Aufbau schnell. latin-ext zusätzlich, weil „Fuṣḥā"
+   Zeichen aus Latin Extended braucht (ṣ, ā). */
+@font-face{font-family:'Cormorant Garamond';src:url('./fonts/CormorantGaramond-400-normal-latin.woff2') format('woff2');font-weight:400;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+2013-2014,U+2018-201A,U+201C-201E,U+2026}
+@font-face{font-family:'Cormorant Garamond';src:url('./fonts/CormorantGaramond-400-normal-latin-ext.woff2') format('woff2');font-weight:400;font-display:swap;unicode-range:U+0100-024F,U+1E00-1EFF}
+@font-face{font-family:'Cormorant Garamond';src:url('./fonts/CormorantGaramond-600-normal-latin.woff2') format('woff2');font-weight:600;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+2013-2014,U+2018-201A,U+201C-201E,U+2026}
+@font-face{font-family:'Cormorant Garamond';src:url('./fonts/CormorantGaramond-600-normal-latin-ext.woff2') format('woff2');font-weight:600;font-display:swap;unicode-range:U+0100-024F,U+1E00-1EFF}
+@font-face{font-family:'Cormorant Garamond';src:url('./fonts/CormorantGaramond-500-italic-latin.woff2') format('woff2');font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:'DM Sans';src:url('./fonts/DMSans-400-700-normal-latin.woff2') format('woff2');font-weight:400 700;font-display:swap;unicode-range:U+0000-00FF,U+0131,U+2013-2014,U+2018-201A,U+201C-201E,U+2026,U+00B7}
+@font-face{font-family:'DM Sans';src:url('./fonts/DMSans-400-700-normal-latin-ext.woff2') format('woff2');font-weight:400 700;font-display:swap;unicode-range:U+0100-024F,U+1E00-1EFF}
+@font-face{font-family:'Amiri';src:url('./fonts/Amiri-400-normal-arabic.woff2') format('woff2');font-weight:400;font-display:swap}
+
+/* ===== Design-Tokens — 1:1 aus der App (web/styles.css) ===== */
+:root{
+  --c-bg:#f6f2e8;
+  --c-bg-elevated:#fdfbf5;
+  --c-ink:#1f2018;
+  --c-ink-muted:#6e6a58;
+  --c-ink-soft:#a39c80;
+  --c-border:#e7e0cc;
+  --c-primary:#2d4a2c;
+  --c-primary-ink:#f5ecd9;
+  --c-accent:#b8862a;
+  --c-shadow:0 2px 4px rgba(60,48,20,.03),0 14px 40px rgba(60,48,20,.07);
+  --c-hairline:rgba(45,74,44,.14);          /* Haarlinien wie in den Teilen-Bildern */
+  --c-glow:rgba(184,134,42,.20);            /* Goldschein hinter dem Download-Knopf */
+  --grain-opacity:.05;
+  --grain-blend:multiply;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --c-bg:#171511;
+    --c-bg-elevated:#201d17;
+    --c-ink:#f0e7d2;
+    --c-ink-muted:#a89f85;
+    --c-ink-soft:#6e6752;
+    --c-border:#2f2b20;
+    /* Im Dunkeln trägt Olive nicht mehr — wie in der App wird Gold
+       zur Aktionsfarbe, dunkle Tinte darauf. */
+    --c-primary:#c6b07a;
+    --c-primary-ink:#1c1a12;
+    --c-accent:#e0b85f;
+    --c-shadow:0 14px 40px rgba(0,0,0,.5);
+    --c-hairline:rgba(240,231,210,.14);
+    --c-glow:rgba(224,184,95,.13);
+    --grain-opacity:.075;
+    --grain-blend:overlay;
+  }
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{
+  background:var(--c-bg);
+  /* clip statt hidden: schneidet versehentlichen Querüberlauf ab,
+     ohne einen Scroll-Container aufzumachen */
+  overflow-x:clip;
+}
+body{
+  font-family:'DM Sans',-apple-system,'Segoe UI',sans-serif;
+  background:var(--c-bg);
+  color:var(--c-ink);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:clip;
+}
+.ar{font-family:'Amiri',serif;direction:rtl;line-height:1.7}
+img{max-width:100%}
+a{color:inherit}
+
+/* Papierkorn wie in den Teilen-Bildern: die Fläche soll eine
+   Oberfläche haben, keine Datei sein. Als Daten-URI, fixiert,
+   nicht anklickbar. */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:5;
+  opacity:var(--grain-opacity);mix-blend-mode:var(--grain-blend);
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>")}
+
+/* Satzspiegel: auf breiten Schirmen zwei stehende Haarlinien, die
+   den Textblock rahmen — das Erkennungszeichen der Marke. Auf dem
+   Handy entfallen sie, dort ist jeder Pixel Breite wertvoll. */
+.page{max-width:680px;margin:0 auto;padding:0 22px 64px;position:relative}
+@media(min-width:900px){
+  body::before,body::after{content:'';position:fixed;top:0;bottom:0;width:1px;
+    background:var(--c-hairline);z-index:1}
+  body::before{left:calc(50% - 400px)}
+  body::after{right:calc(50% - 400px)}
+}
+
+/* ===== Kopfzeile: kleine Marken wie in bild1, darunter Haarlinie ===== */
+.topline{display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:26px 0 18px;border-bottom:1px solid var(--c-hairline)}
+.mark{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--c-ink-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.langs{display:flex;gap:6px;flex-shrink:0}
+.pill{font:inherit;font-size:12px;font-weight:700;letter-spacing:.08em;cursor:pointer;
+  padding:5px 11px;border-radius:999px;border:1px solid var(--c-border);
+  background:var(--c-bg-elevated);color:var(--c-ink-muted);
+  transition:color .15s ease,border-color .15s ease,background .15s ease}
+.pill:hover{border-color:var(--c-accent);color:var(--c-ink)}
+.pill[aria-pressed="true"]{background:var(--c-primary);border-color:var(--c-primary);color:var(--c-primary-ink)}
+
+/* ===== Held: Icon links, Name rechts — die vertraute Store-Anmutung ===== */
+.hero{display:flex;align-items:center;gap:20px;padding:34px 0 8px}
+.appicon{width:96px;height:96px;border-radius:24px;flex-shrink:0;
+  box-shadow:0 20px 46px -20px rgba(45,74,44,.55)}
+.hero-text{min-width:0}
+/* Arabischer Akzent über dem Namen — كَلِمَتي, „meine Worte", das
+   Kalligrafie-Motiv der Marke. line-height trägt die Tashkeel. */
+.ar-accent{font-size:26px;color:var(--c-accent);line-height:1.6;text-align:left;opacity:.9}
+.wm{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;
+  font-size:44px;line-height:1.05;letter-spacing:-.02em}
+.wm span{color:var(--c-accent)}
+.dev{margin-top:4px;font-size:13px;font-weight:700;letter-spacing:.04em;color:var(--c-primary)}
+@media (prefers-color-scheme: dark){ .dev{color:var(--c-accent)} }
+.tagline{margin-top:6px;font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;
+  font-weight:500;font-size:19px;color:var(--c-ink-muted)}
+
+/* ===== Kennzahlen-Zeile: Version · Größe · Android — durch
+   Haarlinien getrennt, wie die Metrik-Zeile einer Store-Seite ===== */
+.stats{display:flex;margin:26px 0 8px;border-block:1px solid var(--c-hairline)}
+.stat{flex:1;text-align:center;padding:14px 4px}
+.stat + .stat{border-left:1px solid var(--c-hairline)}
+.stat b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;
+  font-size:24px;line-height:1.15}
+.stat span{display:block;margin-top:2px;font-size:10.5px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--c-ink-soft)}
+
+/* ===== Download-Bereich ===== */
+.dl-wrap{position:relative;padding:26px 0 10px;text-align:center}
+/* Ein einzelner ruhiger Lichtschein hinter dem Knopf — atmet leicht.
+   Das ist die eine Bewegung der Seite, mehr braucht sie nicht. */
+.dl-glow{position:absolute;left:50%;top:50%;width:340px;height:220px;
+  transform:translate(-50%,-50%);pointer-events:none;border-radius:999px;
+  background:radial-gradient(closest-side,var(--c-glow) 0%,transparent 100%);
+  animation:breathe 3.6s ease-in-out infinite}
+@keyframes breathe{
+  0%,100%{opacity:.55;transform:translate(-50%,-50%) scale(.94)}
+  50%{opacity:1;transform:translate(-50%,-50%) scale(1.05)}
+}
+/* „Neu seit deinem letzten Besuch" — dezent, nur wenn wirklich eine
+   neuere Version da ist als beim letzten Mal (localStorage). */
+/* Wichtig: das eigene display würde das hidden-Attribut überstimmen
+   (Autorenstil schlägt UA-Stil) — deshalb [hidden] explizit. */
+.newbadge[hidden]{display:none}
+.newbadge{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;
+  padding:6px 14px;border-radius:999px;border:1px solid var(--c-accent);
+  background:rgba(184,134,42,.12);color:var(--c-accent);
+  font-size:12.5px;font-weight:700;letter-spacing:.02em}
+.newbadge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--c-accent)}
+.dl{position:relative;display:inline-flex;align-items:center;gap:12px;
+  padding:16px 34px;border-radius:999px;text-decoration:none;
+  background:var(--c-primary);color:var(--c-primary-ink);
+  font-size:17px;font-weight:700;letter-spacing:.01em;
+  box-shadow:var(--c-shadow);
+  transition:transform .18s ease,box-shadow .18s ease}
+.dl:hover{transform:translateY(-2px);box-shadow:0 6px 10px rgba(60,48,20,.06),0 22px 52px rgba(60,48,20,.14)}
+.dl:active{transform:translateY(0) scale(.98)}
+.dl svg{width:19px;height:19px;flex-shrink:0}
+.dl-note{margin-top:12px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--c-ink-soft)}
+
+/* ===== Abschnitte: kleine goldene Überzeile + Cormorant-Titel ===== */
+.sect{margin-top:48px}
+.overline{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:.28em;
+  text-transform:uppercase;color:var(--c-ink-soft)}
+.overline::before{content:'';width:34px;height:1px;background:var(--c-accent);flex-shrink:0}
+.sect h2{margin-top:10px;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;
+  font-size:30px;line-height:1.12;letter-spacing:-.01em}
+.sect h2 em{font-style:italic;font-weight:500;color:var(--c-accent)}
+.sect-meta{margin-top:6px;font-size:13px;color:var(--c-ink-soft)}
+.sect p.text{margin-top:14px;color:var(--c-ink-muted);max-width:56ch}
+
+/* Karte für „Neue Funktionen" — leicht erhaben, wie die Karten der App */
+.wn-card{margin-top:16px;padding:20px 22px;border-radius:18px;
+  background:var(--c-bg-elevated);border:1px solid var(--c-border);box-shadow:var(--c-shadow)}
+.wn-card p{color:var(--c-ink-muted)}
+.wn-card .wn-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;
+  flex-wrap:wrap;margin-bottom:10px}
+.wn-card .wn-ver{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:21px}
+.wn-card .wn-date{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--c-ink-soft)}
+
+/* Funktionsliste: streng gerastert wie in bild2 — römische Ziffer,
+   Titel, eine Zeile Erklärung, Haarlinien dazwischen */
+.features{list-style:none;margin-top:18px}
+.features li{display:flex;gap:18px;padding:16px 0;border-top:1px solid var(--c-hairline)}
+.features li:last-child{border-bottom:1px solid var(--c-hairline)}
+.features .num{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;
+  color:var(--c-accent);flex:0 0 34px;line-height:1.2}
+.features .t{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:20px;line-height:1.2}
+.features .d{margin-top:4px;font-size:14px;line-height:1.55;color:var(--c-ink-muted)}
+
+/* Installations-Schritte: natives <details>, damit Tastatur und
+   Screenreader ohne eigenes Skript funktionieren */
+.steps{margin-top:18px}
+.steps details{border-top:1px solid var(--c-hairline)}
+.steps details:last-of-type{border-bottom:1px solid var(--c-hairline)}
+.steps summary{display:flex;align-items:baseline;gap:16px;padding:15px 2px;cursor:pointer;
+  list-style:none;transition:color .15s ease}
+.steps summary::-webkit-details-marker{display:none}
+.steps summary:hover{color:var(--c-accent)}
+.steps .num{font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;
+  color:var(--c-accent);flex:0 0 30px;line-height:1.2}
+.steps .t{font-weight:700;font-size:15px;flex:1}
+/* Aufklapp-Pfeil: eine schlichte Serife-Chevron aus Text, dreht sich */
+.steps .chev{color:var(--c-ink-soft);transition:transform .2s ease;flex-shrink:0;font-size:12px}
+.steps details[open] .chev{transform:rotate(90deg)}
+.steps .body{padding:0 2px 16px 46px;font-size:14px;color:var(--c-ink-muted);max-width:52ch}
+.update-note{margin-top:16px;padding:14px 18px;border-left:2px solid var(--c-accent);
+  font-size:13.5px;color:var(--c-ink-muted);background:var(--c-bg-elevated);border-radius:0 12px 12px 0}
+
+/* ===== Fuß ===== */
+footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
+  display:flex;align-items:flex-end;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.wm-small{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:24px;line-height:1}
+.wm-small span{color:var(--c-accent)}
+.foot-meta{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--c-ink-soft)}
+.foot-ar{font-size:20px;color:var(--c-accent);opacity:.8}
+
+/* ===== Sanftes Einblenden beim Laden — gestaffelt über --d ===== */
+.reveal{opacity:0;transform:translateY(10px);
+  animation:rise .7s cubic-bezier(.2,.7,.3,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rise{to{opacity:1;transform:none}}
+
+/* Wer Bewegung reduziert hat, bekommt alles sofort und ruhig */
+@media (prefers-reduced-motion: reduce){
+  .reveal{animation:none;opacity:1;transform:none}
+  .dl-glow{animation:none;opacity:.7}
+  .dl,.pill,.steps .chev{transition:none}
+}
+
+/* Sehr schmale Geräte: Held stapeln, damit nichts quetscht */
+@media(max-width:360px){
+  .hero{flex-direction:column;align-items:flex-start}
+  .wm{font-size:38px}
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+<div class="page">
+
+  <header class="topline reveal">
+    <span class="mark" data-i18n="markLeft">Arabisch&nbsp;·&nbsp;Fuṣḥā</span>
+    <nav class="langs" aria-label="Sprache / Language / Idioma">
+      <button class="pill" type="button" data-lang="de" aria-pressed="true">DE</button>
+      <button class="pill" type="button" data-lang="en" aria-pressed="false">EN</button>
+      <button class="pill" type="button" data-lang="es" aria-pressed="false">ES</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Held-Bereich: die vertraute Anmutung einer Store-Seite —
+         Icon, Name, Entwickler — aber in der eigenen Formensprache. -->
+    <section class="hero reveal" style="--d:.06s">
+      <img class="appicon" src="./icon-1024.png" alt="FushaCards App-Icon" width="96" height="96">
+      <div class="hero-text">
+        <div class="ar-accent ar" lang="ar" aria-hidden="true">كَلِمَتي</div>
+        <h1 class="wm">Fusha<span>Cards</span></h1>
+        <p class="dev">Dr. Shoaib</p>
+        <p class="tagline" data-i18n="tagline">Dein Wortschatz, aus deinem Material.</p>
+      </div>
+    </section>
+
+    <!-- Kennzahlen: Version und Größe kommen aus latest.json;
+         die eingebauten Werte sind der Offline-Fallback (file://). -->
+    <section class="stats reveal" style="--d:.12s" aria-label="App-Daten">
+      <div class="stat"><b id="statVersion">2.2.1</b><span data-i18n="statVersion">Version</span></div>
+      <div class="stat"><b id="statSize">21&nbsp;MB</b><span data-i18n="statSize">Größe</span></div>
+      <div class="stat"><b>7.0+</b><span>Android</span></div>
+    </section>
+
+    <div class="dl-wrap reveal" style="--d:.18s">
+      <div class="dl-glow" aria-hidden="true"></div>
+      <p class="newbadge" id="newBadge" hidden data-i18n="newSince">Neue Version seit deinem letzten Besuch</p>
+      <div>
+        <a class="dl" id="dlBtn" href="./downloads/FushaCards.apk" download>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 3v12"/><path d="m6 11 6 6 6-6"/><path d="M4 21h16"/>
+          </svg>
+          <span data-i18n="download">Herunterladen</span>
+        </a>
+      </div>
+      <p class="dl-note" id="dlMeta">APK&nbsp;·&nbsp;21&nbsp;MB</p>
+    </div>
+
+    <!-- Neue Funktionen: Text kommt aus latest.json (notes.<sprache>) -->
+    <section class="sect reveal" style="--d:.24s" id="whatsnew">
+      <div class="overline" data-i18n="ovWhatsNew">Was ist neu</div>
+      <h2 data-i18n="hWhatsNew">Neue <em>Funktionen</em></h2>
+      <div class="wn-card">
+        <div class="wn-head">
+          <span class="wn-ver" id="wnVer">Version 2.2.1</span>
+          <span class="wn-date" id="wnDate"></span>
+        </div>
+        <p id="wnText">Erste Android-Version: kompletter Funktionsumfang der iPhone-App — Karten scannen, FSRS-Wiederholung, Hörmodus, Qur'an-Modul, drei Sprachen.</p>
+      </div>
+    </section>
+
+    <!-- Über die App: die fünf Wege aus dem Teilen-Bild, ehrlich und knapp -->
+    <section class="sect reveal" style="--d:.3s" id="about">
+      <div class="overline" data-i18n="ovAbout">Über diese App</div>
+      <h2 data-i18n="hAbout">Vom Buch zur <em>Karte.</em></h2>
+      <p class="text" data-i18n="aboutText">Kein fertiger Kurs — dein Wortschatz, aus deinem Material. Lehrbuchseite fotografieren, die App erkennt die deutsch-arabischen Wortpaare. Daraus werden Karteikarten, die sich merken, was du kannst.</p>
+      <ul class="features">
+        <li><span class="num">I</span><div><div class="t" data-i18n="f1t">Seite fotografieren</div><div class="d" data-i18n="f1d">Die Kamera erkennt die Wortpaare — oder importieren, oder tippen.</div></div></li>
+        <li><span class="num">II</span><div><div class="t" data-i18n="f2t">Im richtigen Moment wiederholen</div><div class="d" data-i18n="f2d">Was sitzt, kommt seltener. Was hakt, kommt wieder.</div></div></li>
+        <li><span class="num">III</span><div><div class="t" data-i18n="f3t">Hörmodus fürs Auto</div><div class="d" data-i18n="f3d">Vorlesen lassen, laut antworten, freihändig bewerten.</div></div></li>
+        <li><span class="num">IV</span><div><div class="t" data-i18n="f4t">Mit dem Qur’ān verbinden</div><div class="d" data-i18n="f4d">Wort für Wort lesen, Vokabeln direkt übernehmen.</div></div></li>
+        <li><span class="num">V</span><div><div class="t" data-i18n="f5t">Kapitel weitergeben</div><div class="d" data-i18n="f5d">Ein ganzes Kapitel als Datei an Freunde weitergeben.</div></div></li>
+      </ul>
+    </section>
+
+    <!-- Installation: ehrlich erklären, dass Android beim Sideload
+         einmal nachfragt — keine Beschönigung, keine Panik. -->
+    <section class="sect reveal" style="--d:.36s" id="install">
+      <div class="overline" data-i18n="ovInstall">Installation</div>
+      <h2 data-i18n="hInstall">In vier <em>Schritten.</em></h2>
+      <p class="text" data-i18n="installIntro">FushaCards kommt direkt von dieser Seite, nicht aus dem Play Store. Android fragt deshalb einmal nach — das ist bei Apps außerhalb des Stores normal.</p>
+      <div class="steps">
+        <details>
+          <summary><span class="num">I</span><span class="t" data-i18n="s1t">APK herunterladen</span><span class="chev" aria-hidden="true">❯</span></summary>
+          <p class="body" data-i18n="s1b">Oben auf „Herunterladen" tippen. Die Datei FushaCards.apk landet in deinen Downloads.</p>
+        </details>
+        <details>
+          <summary><span class="num">II</span><span class="t" data-i18n="s2t">Datei öffnen</span><span class="chev" aria-hidden="true">❯</span></summary>
+          <p class="body" data-i18n="s2b">In der Download-Benachrichtigung auf die Datei tippen — oder in der Dateien-App unter „Downloads" öffnen.</p>
+        </details>
+        <details>
+          <summary><span class="num">III</span><span class="t" data-i18n="s3t">Quelle einmalig erlauben</span><span class="chev" aria-hidden="true">❯</span></summary>
+          <p class="body" data-i18n="s3b">Android fragt, ob diese Quelle Apps installieren darf. „Einstellungen" antippen, den Schalter „Dieser Quelle vertrauen" aktivieren, zurückgehen. Das ist nur einmal nötig.</p>
+        </details>
+        <details>
+          <summary><span class="num">IV</span><span class="t" data-i18n="s4t">Play-Protect-Hinweis bestätigen</span><span class="chev" aria-hidden="true">❯</span></summary>
+          <p class="body" data-i18n="s4b">Google Play Protect kann warnen, weil die App nicht aus dem Play Store stammt. Auf „Mehr Details" und dann „Trotzdem installieren" tippen. Lade die App nur von dieser Seite herunter.</p>
+        </details>
+      </div>
+      <p class="update-note" data-i18n="updateNote">Bei einem Update einfach die neue APK darüber installieren — deine Karten und Kapitel bleiben erhalten.</p>
+    </section>
+  </main>
+
+  <footer class="reveal" style="--d:.42s">
+    <div>
+      <div class="wm-small">Fusha<span>Cards</span></div>
+      <div class="foot-meta" style="margin-top:8px" data-i18n="footMeta">Für Android&nbsp;·&nbsp;Deutsch · English · Español</div>
+    </div>
+    <div class="foot-ar ar" lang="ar" aria-hidden="true">شَرْحُ التَّطْبيق</div>
+  </footer>
+
+</div>
+
+<script>
+/* ============================================================
+ * Kein Framework, kein Build-Schritt — bewusst, wie die App selbst.
+ * Drei Aufgaben:
+ *   1. latest.json laden und rendern (Version, Größe, Datum,
+ *      Was-ist-neu, Download-Ziel). Scheitert der Fetch — z. B.
+ *      lokal per file:// geöffnet — bleiben die eingebauten
+ *      Fallback-Werte stehen, ohne Fehlermeldung.
+ *   2. Sprache: Start per navigator.language (de/en/es, sonst de),
+ *      umschaltbar über die Pills, Wahl wird gemerkt.
+ *   3. „Neue Version seit deinem letzten Besuch": localStorage
+ *      merkt sich die zuletzt gesehene Version; ist die geladene
+ *      neuer, erscheint der dezente Hinweis.
+ * ============================================================ */
+(function () {
+  'use strict';
+
+  /* Fallback = exakt der Stand der mitgelieferten latest.json.
+     So sieht die Seite auch ohne Netz/Fetch vollständig aus. */
+  var FALLBACK = {
+    versionName: '2.2.1',
+    versionCode: 1,
+    apkUrl: './downloads/FushaCards.apk',
+    sizeMb: 21,
+    date: '2026-08-01',
+    notes: {
+      de: "Erste Android-Version: kompletter Funktionsumfang der iPhone-App — Karten scannen, FSRS-Wiederholung, Hörmodus, Qur'an-Modul, drei Sprachen.",
+      en: "First Android release: the full iPhone feature set — scan cards, FSRS review, listening mode, Qur'an module, three languages.",
+      es: "Primera versión para Android: todas las funciones del iPhone — escanear tarjetas, repaso FSRS, modo audio, módulo del Corán, tres idiomas."
+    }
+  };
+
+  /* Alle Oberflächentexte in den drei App-Sprachen. Jeder Key muss in
+     allen dreien existieren — dieselbe Regel wie in der App-i18n. */
+  var STRINGS = {
+    de: {
+      markLeft: 'Arabisch · Fuṣḥā',
+      tagline: 'Dein Wortschatz, aus deinem Material.',
+      statVersion: 'Version', statSize: 'Größe',
+      download: 'Herunterladen',
+      newSince: 'Neue Version seit deinem letzten Besuch',
+      ovWhatsNew: 'Was ist neu', hWhatsNew: 'Neue |Funktionen|',
+      versionWord: 'Version',
+      ovAbout: 'Über diese App', hAbout: 'Vom Buch zur |Karte.|',
+      aboutText: 'Kein fertiger Kurs — dein Wortschatz, aus deinem Material. Lehrbuchseite fotografieren, die App erkennt die deutsch-arabischen Wortpaare. Daraus werden Karteikarten, die sich merken, was du kannst.',
+      f1t: 'Seite fotografieren', f1d: 'Die Kamera erkennt die Wortpaare — oder importieren, oder tippen.',
+      f2t: 'Im richtigen Moment wiederholen', f2d: 'Was sitzt, kommt seltener. Was hakt, kommt wieder.',
+      f3t: 'Hörmodus fürs Auto', f3d: 'Vorlesen lassen, laut antworten, freihändig bewerten.',
+      f4t: 'Mit dem Qur’ān verbinden', f4d: 'Wort für Wort lesen, Vokabeln direkt übernehmen.',
+      f5t: 'Kapitel weitergeben', f5d: 'Ein ganzes Kapitel als Datei an Freunde weitergeben.',
+      ovInstall: 'Installation', hInstall: 'In vier |Schritten.|',
+      installIntro: 'FushaCards kommt direkt von dieser Seite, nicht aus dem Play Store. Android fragt deshalb einmal nach — das ist bei Apps außerhalb des Stores normal.',
+      s1t: 'APK herunterladen', s1b: 'Oben auf „Herunterladen" tippen. Die Datei FushaCards.apk landet in deinen Downloads.',
+      s2t: 'Datei öffnen', s2b: 'In der Download-Benachrichtigung auf die Datei tippen — oder in der Dateien-App unter „Downloads" öffnen.',
+      s3t: 'Quelle einmalig erlauben', s3b: 'Android fragt, ob diese Quelle Apps installieren darf. „Einstellungen" antippen, den Schalter „Dieser Quelle vertrauen" aktivieren, zurückgehen. Das ist nur einmal nötig.',
+      s4t: 'Play-Protect-Hinweis bestätigen', s4b: 'Google Play Protect kann warnen, weil die App nicht aus dem Play Store stammt. Auf „Mehr Details" und dann „Trotzdem installieren" tippen. Lade die App nur von dieser Seite herunter.',
+      updateNote: 'Bei einem Update einfach die neue APK darüber installieren — deine Karten und Kapitel bleiben erhalten.',
+      footMeta: 'Für Android · Deutsch · English · Español',
+      locale: 'de-DE'
+    },
+    en: {
+      markLeft: 'Arabic · Fuṣḥā',
+      tagline: 'Your vocabulary, from your material.',
+      statVersion: 'Version', statSize: 'Size',
+      download: 'Download',
+      newSince: 'New version since your last visit',
+      ovWhatsNew: "What's new", hWhatsNew: 'New |features|',
+      versionWord: 'Version',
+      ovAbout: 'About this app', hAbout: 'From book to |card.|',
+      aboutText: 'Not a ready-made course — your vocabulary, from your material. Photograph a textbook page and the app detects the German–Arabic word pairs. They become flashcards that remember what you already know.',
+      f1t: 'Photograph a page', f1d: 'The camera detects the word pairs — or import, or type.',
+      f2t: 'Review at the right moment', f2d: 'What sticks comes up less often. What doesn’t comes back.',
+      f3t: 'Listening mode for the car', f3d: 'Have cards read aloud, answer by voice, rate hands-free.',
+      f4t: 'Connect with the Qur’an', f4d: 'Read word by word, add vocabulary directly.',
+      f5t: 'Share chapters', f5d: 'Pass a whole chapter to friends as a file.',
+      ovInstall: 'Installation', hInstall: 'Four |steps.|',
+      installIntro: 'FushaCards comes straight from this page, not from the Play Store. Android will ask once — that is normal for apps outside the store.',
+      s1t: 'Download the APK', s1b: 'Tap “Download” above. The file FushaCards.apk lands in your Downloads.',
+      s2t: 'Open the file', s2b: 'Tap the file in the download notification — or open it in the Files app under “Downloads”.',
+      s3t: 'Allow this source once', s3b: 'Android asks whether this source may install apps. Tap “Settings”, enable “Allow from this source”, then go back. This is only needed once.',
+      s4t: 'Confirm the Play Protect notice', s4b: 'Google Play Protect may warn you because the app is not from the Play Store. Tap “More details”, then “Install anyway”. Only download the app from this page.',
+      updateNote: 'To update, simply install the new APK on top — your cards and chapters are kept.',
+      footMeta: 'For Android · Deutsch · English · Español',
+      locale: 'en-GB'
+    },
+    es: {
+      markLeft: 'Árabe · Fuṣḥā',
+      tagline: 'Tu vocabulario, de tu material.',
+      statVersion: 'Versión', statSize: 'Tamaño',
+      download: 'Descargar',
+      newSince: 'Nueva versión desde tu última visita',
+      ovWhatsNew: 'Novedades', hWhatsNew: 'Nuevas |funciones|',
+      versionWord: 'Versión',
+      ovAbout: 'Sobre esta app', hAbout: 'Del libro a la |tarjeta.|',
+      aboutText: 'No es un curso prefabricado: tu vocabulario, de tu material. Fotografía una página del libro y la app reconoce los pares de palabras alemán–árabe. Se convierten en tarjetas que recuerdan lo que ya sabes.',
+      f1t: 'Fotografiar una página', f1d: 'La cámara reconoce los pares de palabras — o importa, o escribe.',
+      f2t: 'Repasar en el momento justo', f2d: 'Lo que dominas aparece menos. Lo que falla, vuelve.',
+      f3t: 'Modo audio para el coche', f3d: 'Escucha las tarjetas, responde en voz alta, evalúa sin manos.',
+      f4t: 'Conectar con el Corán', f4d: 'Lee palabra por palabra y añade vocabulario directamente.',
+      f5t: 'Compartir capítulos', f5d: 'Pasa un capítulo entero a tus amigos como archivo.',
+      ovInstall: 'Instalación', hInstall: 'En cuatro |pasos.|',
+      installIntro: 'FushaCards llega directamente desde esta página, no desde la Play Store. Android preguntará una vez — es normal en apps fuera de la tienda.',
+      s1t: 'Descargar el APK', s1b: 'Toca «Descargar» arriba. El archivo FushaCards.apk queda en tus descargas.',
+      s2t: 'Abrir el archivo', s2b: 'Toca el archivo en la notificación de descarga — o ábrelo en la app Archivos, en «Descargas».',
+      s3t: 'Permitir esta fuente una vez', s3b: 'Android pregunta si esta fuente puede instalar apps. Toca «Ajustes», activa «Permitir desde esta fuente» y vuelve atrás. Solo hace falta una vez.',
+      s4t: 'Confirmar el aviso de Play Protect', s4b: 'Google Play Protect puede avisar porque la app no viene de la Play Store. Toca «Más detalles» y luego «Instalar de todos modos». Descarga la app solo desde esta página.',
+      updateNote: 'Para actualizar, instala el nuevo APK encima — tus tarjetas y capítulos se conservan.',
+      footMeta: 'Para Android · Deutsch · English · Español',
+      locale: 'es-ES'
+    }
+  };
+
+  var LANG_KEY = 'fushacards.siteLang';
+  var SEEN_KEY = 'fushacards.lastSeenVersion';
+
+  /* localStorage kann fehlen (Privatmodus, file://) — dann eben ohne
+     Gedächtnis, aber ohne Absturz. */
+  function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
+
+  function pickLang() {
+    var saved = lsGet(LANG_KEY);
+    if (STRINGS[saved]) return saved;
+    var nav = (navigator.language || 'de').slice(0, 2).toLowerCase();
+    return STRINGS[nav] ? nav : 'de';
+  }
+
+  /* Versionsvergleich „2.10.0" > „2.2.1" — numerisch je Segment,
+     ein simpler String-Vergleich würde hier lügen. */
+  function newerThan(a, b) {
+    var pa = String(a).split('.'), pb = String(b).split('.');
+    for (var i = 0; i < Math.max(pa.length, pb.length); i++) {
+      var x = parseInt(pa[i], 10) || 0, y = parseInt(pb[i], 10) || 0;
+      if (x !== y) return x > y;
+    }
+    return false;
+  }
+
+  var lang = pickLang();
+  var data = FALLBACK;
+  /* Einmal VOR dem ersten Rendern lesen: applyData() läuft zweimal
+     (Fallback, dann Fetch) und schreibt den Schlüssel jeweils neu —
+     verglichen wird aber immer mit dem Stand des LETZTEN Besuchs,
+     sonst zeigt schon der allererste Besuch fälschlich „neu". */
+  var seenAtLoad = lsGet(SEEN_KEY);
+
+  function applyStrings() {
+    var S = STRINGS[lang];
+    document.documentElement.lang = lang;
+    var nodes = document.querySelectorAll('[data-i18n]');
+    for (var i = 0; i < nodes.length; i++) {
+      var key = nodes[i].getAttribute('data-i18n');
+      var txt = S[key];
+      if (txt == null) continue;
+      /* |kursiv| markiert den goldenen Kursiv-Teil der Überschriften —
+         so bleibt der Text reine Daten, kein HTML in den Strings. */
+      if (txt.indexOf('|') !== -1) {
+        var parts = txt.split('|'); /* [davor, kursiv, danach] */
+        nodes[i].textContent = '';
+        nodes[i].appendChild(document.createTextNode(parts[0]));
+        var em = document.createElement('em');
+        em.textContent = parts[1];
+        nodes[i].appendChild(em);
+        nodes[i].appendChild(document.createTextNode(parts[2] || ''));
+      } else {
+        nodes[i].textContent = txt;
+      }
+    }
+    var pills = document.querySelectorAll('.pill');
+    for (var p = 0; p < pills.length; p++) {
+      pills[p].setAttribute('aria-pressed', pills[p].getAttribute('data-lang') === lang ? 'true' : 'false');
+    }
+  }
+
+  function fmtDate(iso) {
+    /* Ungültiges Datum → leer lassen statt „Invalid Date" zeigen */
+    var d = new Date(iso + 'T00:00:00');
+    if (isNaN(d)) return '';
+    try {
+      return d.toLocaleDateString(STRINGS[lang].locale, { day: 'numeric', month: 'long', year: 'numeric' });
+    } catch (e) { return iso; }
+  }
+
+  function applyData() {
+    var S = STRINGS[lang];
+    var note = (data.notes && (data.notes[lang] || data.notes.de)) || '';
+    document.getElementById('statVersion').textContent = data.versionName;
+    document.getElementById('statSize').textContent = data.sizeMb + ' MB';
+    document.getElementById('dlBtn').setAttribute('href', data.apkUrl);
+    var dateStr = fmtDate(data.date);
+    /* Geschützte Leerzeichen (\u00A0), damit „21 MB“ und die Punkte
+       nie einzeln umbrechen — als Escape geschrieben, damit sie im
+       Quelltext sichtbar bleiben. */
+    document.getElementById('dlMeta').textContent =
+      'APK\u00A0\u00B7\u00A0' + data.sizeMb + '\u00A0MB' + (dateStr ? '\u00A0\u00B7\u00A0' + dateStr : '');
+    document.getElementById('wnVer').textContent = S.versionWord + ' ' + data.versionName;
+    document.getElementById('wnDate').textContent = dateStr;
+    if (note) document.getElementById('wnText').textContent = note;
+
+    /* Der „aha, Update!"-Moment: nur zeigen, wenn beim LETZTEN Besuch
+       eine ältere Version zu sehen war. Beim allerersten Besuch ist
+       alles neu — da wäre der Hinweis bedeutungslos. */
+    document.getElementById('newBadge').hidden =
+      !(seenAtLoad && newerThan(data.versionName, seenAtLoad));
+    lsSet(SEEN_KEY, data.versionName);
+  }
+
+  function setLang(l) {
+    if (!STRINGS[l] || l === lang) return;
+    lang = l;
+    lsSet(LANG_KEY, l);
+    applyStrings();
+    applyData(); /* Datum, Notes und Versions-Wort hängen an der Sprache */
+  }
+
+  var pills = document.querySelectorAll('.pill');
+  for (var i = 0; i < pills.length; i++) {
+    pills[i].addEventListener('click', function () { setLang(this.getAttribute('data-lang')); });
+  }
+
+  applyStrings();
+  applyData(); /* Fallback sofort rendern — die Seite ist nie „leer" */
+
+  /* latest.json nachladen; no-store, damit GitHub-Pages-Caches ein
+     frisches Update nicht tagelang verstecken. Jeder Fehler (file://,
+     offline, 404) landet still im Fallback — kein Fehlertext. */
+  fetch('./latest.json', { cache: 'no-store' })
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (json) {
+      if (!json || typeof json.versionName !== 'string') return;
+      data = json;
+      applyData();
+    })
+    .catch(function () { /* bewusst still — Fallback steht bereits */ });
+})();
+</script>
+</body>
+</html>
