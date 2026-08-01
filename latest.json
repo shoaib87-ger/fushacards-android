@@ -1,12 +1,12 @@
 {
-  "versionName": "1.2",
-  "versionCode": 4,
+  "versionName": "1.3",
+  "versionCode": 5,
   "apkUrl": "./downloads/FushaCards.apk",
   "sizeMb": 21,
   "date": "2026-08-01",
   "notes": {
-    "de": "Version 1.2: Die Texterkennung beim Scannen wurde systematisch nachgemessen und verbessert — arabische Wörter werden nicht mehr fälschlich verworfen, Buchstaben-Kauderwelsch wird herausgefiltert, und unsichtbare Steuerzeichen landen nicht mehr auf den Karten. Außerdem prüft die App jetzt alle 12 statt 24 Stunden auf neue Versionen.",
-    "en": "Version 1.2: scan text recognition was systematically measured and improved — Arabic words are no longer wrongly discarded, garbled letter noise is filtered out, and invisible control characters no longer end up on your cards. The app now also checks for new versions every 12 hours instead of 24.",
-    "es": "Versión 1.2: el reconocimiento de texto al escanear se midió y mejoró sistemáticamente — las palabras árabes ya no se descartan por error, el ruido de letras sin sentido se filtra, y los caracteres de control invisibles ya no acaban en tus tarjetas. Además, la app ahora comprueba nuevas versiones cada 12 horas en lugar de 24."
+    "de": "Version 1.3: Der Scan versteht jetzt Lehrbuch-Tabellen — Nummern und Beispielsätze werden erkannt und aussortiert, gespeichert wird nur noch Vokabel und Bedeutung (das Buchstaben-Durcheinander ist damit behoben). Außerdem liest eine neue Hybrid-Erkennung die deutsche Spalte mit Googles nativer Texterkennung — deutlich zuverlässiger, gerade bei Fotos aus der Ferne.",
+    "en": "Version 1.3: scanning now understands textbook tables — numbers and example sentences are detected and filtered out, so only the word and its meaning are saved (this fixes the garbled results). A new hybrid recognition also reads the German column with Google's native text recognition — much more reliable, especially for photos taken from a distance.",
+    "es": "Versión 1.3: el escaneo ahora entiende tablas de libros de texto — los números y las frases de ejemplo se detectan y se descartan, guardando solo la palabra y su significado (esto corrige los resultados sin sentido). Además, un nuevo reconocimiento híbrido lee la columna alemana con el reconocimiento de texto nativo de Google — mucho más fiable, sobre todo en fotos tomadas desde lejos."
   }
 }
