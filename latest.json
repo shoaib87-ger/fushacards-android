@@ -1,12 +1,12 @@
 {
-  "versionName": "1.0",
-  "versionCode": 2,
+  "versionName": "1.1",
+  "versionCode": 3,
   "apkUrl": "./downloads/FushaCards.apk",
   "sizeMb": 21,
   "date": "2026-08-01",
   "notes": {
-    "de": "Version 1.0: App-Icon beim Installieren, Start immer im hellen Modus, neuer nativer Dokument-Scanner (Seite scannen / aus Fotos / Datei) mit deutlich besserer Texterkennung, Vorlesen und Hörmodus über die Android-Sprachausgabe, Qibla-Ortung funktioniert, Zurück-Taste und Intro-Überspringen korrigiert.",
-    "en": "Version 1.0: app icon on install, always starts in light mode, new native document scanner (scan page / from photos / file) with much better text recognition, read-aloud and listening mode via Android text-to-speech, Qibla location works, back button and intro skip fixed.",
-    "es": "Versión 1.0: icono de la app al instalar, siempre inicia en modo claro, nuevo escáner de documentos nativo (escanear página / desde fotos / archivo) con reconocimiento de texto mucho mejor, lectura en voz alta y modo audio mediante la voz de Android, la ubicación para la alquibla funciona, botón atrás y saltar la intro corregidos."
+    "de": "Version 1.1: Scans werden in voller Auflösung erkannt und scharf angezeigt, Überspringen im Intro ist jetzt gut erreichbar, die Spracherkennung im Hörmodus funktioniert ohne vorinstallierte Offline-Sprachpakete, und in den Hörmodus-Einstellungen gibt es einen direkten Absprung zum Installieren der Google-Sprachstimmen (Deutsch/Arabisch).",
+    "en": "Version 1.1: scans are recognized at full resolution and displayed sharply, the intro skip button is now easy to reach, speech recognition in listening mode works without pre-installed offline language packs, and the listening-mode settings now link directly to installing the Google voices (German/Arabic).",
+    "es": "Versión 1.1: los escaneos se reconocen a resolución completa y se muestran nítidos, el botón de saltar la intro ahora es fácil de alcanzar, el reconocimiento de voz del modo audio funciona sin paquetes de idioma sin conexión preinstalados, y los ajustes del modo audio enlazan directamente con la instalación de las voces de Google (alemán/árabe)."
   }
 }
