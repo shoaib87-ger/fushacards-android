@@ -247,6 +247,64 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
   background:#243c23;border:1px solid var(--c-border);box-shadow:var(--c-shadow)}
 .vidcap{margin-top:10px;text-align:center;font-size:13px;letter-spacing:.14em;
   text-transform:uppercase;color:var(--c-ink-muted)}
+
+/* ===== Ehrlicher Hinweis „Android-Fassung im Ausbau" — steht bewusst
+   direkt beim Download, damit ihn niemand erst nach der Installation
+   findet. Gleiche Kartenanmutung wie .wn-card, nur mit goldener
+   Kante links (wie .update-note), damit er ruhig, aber sichtbar ist. */
+.notice{margin-top:30px;padding:20px 22px;border-radius:18px;
+  background:var(--c-bg-elevated);border:1px solid var(--c-border);
+  border-left:3px solid var(--c-accent);box-shadow:var(--c-shadow)}
+.notice .overline{margin-bottom:10px}
+.notice h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;
+  font-size:25px;line-height:1.15;letter-spacing:-.01em}
+.notice p{margin-top:10px;font-size:14.5px;line-height:1.6;color:var(--c-ink-muted)}
+.notice p.lead{color:var(--c-ink)}
+
+/* ===== Zwei Prompt-Karten nebeneinander, auf dem Handy untereinander.
+   min-width:0 an der Karte ist wichtig: sonst zwingt der <pre>-Inhalt
+   die Grid-Spalte breiter und die ganze Seite scrollt seitlich. ===== */
+.promptgrid{display:grid;grid-template-columns:1fr;gap:22px;margin-top:22px}
+@media(min-width:760px){.promptgrid{grid-template-columns:1fr 1fr}}
+.promptcard{min-width:0;display:flex;flex-direction:column;
+  padding:20px 20px 18px;border-radius:18px;
+  background:var(--c-bg-elevated);border:1px solid var(--c-border);box-shadow:var(--c-shadow)}
+.promptcard h3{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;
+  font-size:21px;line-height:1.2}
+.promptcard .when{margin-top:8px;font-size:14px;line-height:1.55;color:var(--c-ink-muted)}
+.promptcard .howto{margin-top:8px;font-size:13.5px;line-height:1.55;color:var(--c-ink)}
+.promptcard .fill{margin-top:8px;font-size:13px;line-height:1.5;color:var(--c-ink-soft)}
+/* Eigener Scroll-Container: quer UND hoch begrenzt, damit weder die
+   Seite seitlich rutscht noch der lange Prompt alles zuschüttet. */
+.prewrap{margin-top:14px;max-height:260px;overflow:auto;
+  border:1px solid var(--c-border);border-radius:12px;background:var(--c-bg);
+  -webkit-overflow-scrolling:touch}
+.prewrap pre{margin:0;padding:14px 16px;white-space:pre;tab-size:2;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  font-size:12px;line-height:1.5;color:var(--c-ink)}
+.copybtn{margin-top:14px;align-self:flex-start;font:inherit;font-size:14px;font-weight:700;
+  cursor:pointer;padding:10px 22px;border-radius:999px;
+  border:1px solid var(--c-primary);background:var(--c-primary);color:var(--c-primary-ink);
+  transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.copybtn:hover{transform:translateY(-1px)}
+.copybtn:active{transform:translateY(0) scale(.98)}
+/* Sichtbarer Fokus für Tastatur — mit Rückfall für Browser ohne
+   :focus-visible (dort zeigt schon :focus den Ring). */
+.copybtn:focus{outline:2px solid var(--c-accent);outline-offset:3px}
+.copybtn:focus:not(:focus-visible){outline:none}
+.copybtn:focus-visible{outline:2px solid var(--c-accent);outline-offset:3px}
+.copybtn.done{background:var(--c-accent);border-color:var(--c-accent);color:#fff}
+
+/* ===== Nummerierte Unter-Schritte (Stimmen installieren) ===== */
+.subsect{margin-top:34px}
+.subhead{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;
+  font-size:22px;line-height:1.2}
+.numsteps{list-style:none;counter-reset:ns;margin-top:14px}
+.numsteps li{position:relative;counter-increment:ns;padding:13px 0 13px 42px;
+  border-top:1px solid var(--c-hairline);font-size:14px;line-height:1.55;color:var(--c-ink-muted)}
+.numsteps li:last-child{border-bottom:1px solid var(--c-hairline)}
+.numsteps li::before{content:counter(ns) '.';position:absolute;left:2px;top:11px;
+  font-family:'Cormorant Garamond',Georgia,serif;font-size:20px;line-height:1.4;color:var(--c-accent)}
 </style>
 </head>
 <body>
@@ -278,7 +336,7 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
     <!-- Kennzahlen: Version und Größe kommen aus latest.json;
          die eingebauten Werte sind der Offline-Fallback (file://). -->
     <section class="stats reveal" style="--d:.12s" aria-label="App-Daten">
-      <div class="stat"><b id="statVersion">2.2.1</b><span data-i18n="statVersion">Version</span></div>
+      <div class="stat"><b id="statVersion">1.4</b><span data-i18n="statVersion">Version</span></div>
       <div class="stat"><b id="statSize">21&nbsp;MB</b><span data-i18n="statSize">Größe</span></div>
       <div class="stat"><b>7.0+</b><span>Android</span></div>
     </section>
@@ -298,6 +356,16 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
       <p class="dl-note" id="dlMeta">APK&nbsp;·&nbsp;21&nbsp;MB</p>
     </div>
 
+    <!-- Ehrlicher Stand der Android-Fassung — bewusst HIER, direkt am
+         Download, damit man es liest, BEVOR man herunterlädt. -->
+    <section class="notice reveal" style="--d:.2s" id="state">
+      <div class="overline" data-i18n="ovNotice">Stand der Android-Fassung</div>
+      <h2 data-i18n="noticeTitle">Die Android-Fassung wird noch ausgebaut</h2>
+      <p class="lead" data-i18n="noticeP1">Die App ist vollständig nutzbar, wächst aber weiter. Einen Punkt sagen wir offen, bevor du lädst.</p>
+      <p data-i18n="noticeP2">Die Scan- und Texterkennung für ARABISCH ist auf Android nicht optimal. Das iPhone bringt eine eingebaute arabische Texterkennung mit, Android hat keine — Googles Erkennung beherrscht Arabisch bis heute nicht. FushaCards nutzt deshalb einen offenen Ersatz (Tesseract): Lateinische Schrift liest er gut, arabische Schrift mit Vokalzeichen nur teilweise.</p>
+      <p data-i18n="noticeP3">Empfehlung: Erzeuge deine Karteikarten stattdessen mit einer KI (ChatGPT, Gemini, Claude) — Foto oder PDF hochladen oder den Text hineinkopieren, die fertige Datei herunterladen und in FushaCards importieren. Das ist der reguläre Importweg der App, keine Notlösung. Die fertigen Prompts dafür stehen weiter unten.</p>
+    </section>
+
     <!-- Das Erklärvideo (1:44) — auf Wunsch direkt unter dem Download. -->
     <div class="vidwrap reveal" style="--d:.21s">
       <video controls playsinline preload="metadata" src="./erklaervideo.mp4"></video>
@@ -310,7 +378,7 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
       <h2 data-i18n="hWhatsNew">Neue <em>Funktionen</em></h2>
       <div class="wn-card">
         <div class="wn-head">
-          <span class="wn-ver" id="wnVer">Version 2.2.1</span>
+          <span class="wn-ver" id="wnVer">Version 1.4</span>
           <span class="wn-date" id="wnDate"></span>
         </div>
         <p id="wnText">Erste Android-Version: kompletter Funktionsumfang der iPhone-App — Karten scannen, FSRS-Wiederholung, Hörmodus, Qur'an-Modul, drei Sprachen.</p>
@@ -329,6 +397,152 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
         <li><span class="num">IV</span><div><div class="t" data-i18n="f4t">Mit dem Qur’ān verbinden</div><div class="d" data-i18n="f4d">Wort für Wort lesen, Vokabeln direkt übernehmen.</div></div></li>
         <li><span class="num">V</span><div><div class="t" data-i18n="f5t">Kapitel weitergeben</div><div class="d" data-i18n="f5d">Ein ganzes Kapitel als Datei an Freunde weitergeben.</div></div></li>
       </ul>
+    </section>
+
+    <!-- Karten mit einer KI erstellen: die beiden erprobten Prompts.
+         WICHTIG: Die Prompt-TEXTE bleiben in allen drei Sprachfassungen
+         auf DEUTSCH — sie sind so erprobt und erzeugen deutsche
+         Vokabelseiten. Übersetzt wird nur, was drumherum steht.
+         Deshalb tragen die <pre>-Blöcke KEIN data-i18n und stehen
+         bündig am Zeilenanfang: in <pre> ist jedes Leerzeichen Inhalt. -->
+    <section class="sect reveal" style="--d:.33s" id="ai">
+      <div class="overline" data-i18n="ovAi">Karten aus dem Buch</div>
+      <h2 data-i18n="hAi">Karten mit einer <em>KI</em> erstellen</h2>
+      <p class="text" data-i18n="aiIntro">Lade ein Foto, einen Screenshot oder eine PDF deines Lehrbuchs bei ChatGPT, Gemini oder Claude hoch — oder kopiere den Text hinein — und stelle einen der beiden Prompts davor. Die Antwort speicherst du als Datei und importierst sie in FushaCards.</p>
+      <p class="text" data-i18n="aiLangNote">Beide Prompts sind bewusst auf Deutsch formuliert: So sind sie erprobt, und sie erzeugen deutsche Vokabelseiten. Füge sie unverändert ein.</p>
+
+      <div class="promptgrid">
+        <article class="promptcard">
+          <h3 data-i18n="pAt">Variante A — Lehrbuch mit Kapiteln und Lektionen (JSON)</h3>
+          <p class="when" data-i18n="pAw">Wann? Wenn dein Buch in Lektionen gegliedert ist. Der Prompt erzeugt ein komplettes Kapitel MIT Lektionen als Unterkapitel, inklusive Notizen (Plural, Genus, Verbformen).</p>
+          <p class="howto" data-i18n="pAh">Danach in FushaCards: Hochladen → „Sicherung/Import" → Datei importieren.</p>
+          <p class="fill" data-i18n="pAf">Vor dem Kopieren zwei Platzhalter ausfüllen: [KAPITELNAME] und [LEKTIONS-BEZEICHNUNG].</p>
+          <div class="prewrap" tabindex="0" role="group" aria-label="Prompt A"><pre id="promptA">
+Du bekommst eine PDF (oder Screenshots von PDF-Seiten) mit einem
+Vokabel-Lehrbuch. Extrahiere daraus alle Vokabeln und gib sie als EIN
+einziges JSON-Objekt im unten beschriebenen Format aus. Keine Erklärungen
+davor oder danach, nur das JSON.
+
+WICHTIG — Vokalzeichen/Sonderzeichen:
+Falls die PDF-Textebene beim Kopieren Vokalzeichen (Fatha, Kasra, Damma,
+Shadda, Sukun) verliert, verschiebt oder durch falsche Zeichen ersetzt,
+verlasse dich NICHT auf den kopierten Text. Lies die Seiten stattdessen
+VISUELL (als Bild), so wie ein Mensch sie lesen würde. Erkennst du bereits
+beim ersten Testabschnitt, dass Vokalzeichen fehlen oder falsch aussehen,
+sag das kurz und bitte mich, die betroffenen Seiten stattdessen als
+Screenshots/Bilder hochzuladen statt als PDF-Datei.
+
+WAS EXTRAHIEREN:
+- Nur echte Vokabeleinträge (Wort + Übersetzung), keine Übungsanweisungen,
+  keine Grammatikerklärungen, keine vollständigen Beispielsätze aus dem
+  Fließtext (außer das Buch listet feste Redewendungen als Vokabeleintrag).
+- Erkenne Kapitel-/Lektionsüberschriften im Buch (z. B. "Lektion 3",
+  "Chapter 3", "Unit 3") und ordne jede gefundene Vokabelliste der zuletzt
+  gesehenen Überschrift zu.
+- WICHTIG: Vokabellisten laufen manchmal über die Seitengrenze hinweg
+  weiter, OHNE dass auf der Folgeseite die Überschrift wiederholt wird.
+  Prüfe das aktiv — sonst gehen ganze Vokabelblöcke verloren.
+- Wenn eine Lektion nachweislich keine eigene Vokabelliste hat
+  (z. B. reine Wiederholungslektion), lasse sie einfach weg.
+
+WIE JEDE KARTE AUFGEBAUT WIRD:
+- "front" = genau EIN Begriff in der Ausgangssprache (z. B. Deutsch),
+  ohne Klammern, ohne Sternchen, ohne mehrere Bedeutungen aneinandergereiht.
+- "back" = genau EIN Wort/Ausdruck in der Zielsprache, mit vollständiger
+  Vokalisierung/Aussprachezeichen, falls das Original sie hat.
+- Zusatzinformationen (Plural, Genus, weitere Bedeutungen, grammatische
+  Hinweise, Sonderformen) gehören NICHT ins Hauptfeld, sondern in die
+  passende Notiz:
+  - "noteDe" enthält NUR Text in der Ausgangssprache (z. B. Deutsch).
+  - "noteAr" enthält NUR Text in der Zielsprache (z. B. Arabisch).
+  - Beide Notizen sollen inhaltlich dasselbe aussagen, nur je in ihrer
+    eigenen Sprache — keine Sprachmischung in einem Feld.
+- Bei VERBEN: "front"/"back" tragen die Grundform (im Deutschen z. B.
+  "er verstand", im Arabischen die Perfektform). Alle weiteren Formen
+  (Präsens, Verbalnomen, Infinitiv o. ä.) kommen gespiegelt in beide
+  Notizen, in derselben Reihenfolge wie im Original.
+- Erfinde NIE Vokabeln, Bedeutungen oder Formen, die nicht im Original
+  stehen. Wenn du eine Übersetzung im Original für erkennbar falsch hältst,
+  übernimm sie trotzdem auf die Karte, aber vermerke den Zweifel kurz in
+  der jeweiligen Notiz.
+
+AUSGABEFORMAT (exaktes JSON-Schema, nur mit deinen Daten befüllen):
+
+{
+  "type": "arabisch-app-export",
+  "version": 3,
+  "chapter": { "name": "[KAPITELNAME]", "icon": "" },
+  "units": [
+    { "id": "l1", "name": "[LEKTIONS-BEZEICHNUNG] 1", "order": 0, "shortLabel": "L1" },
+    { "id": "l2", "name": "[LEKTIONS-BEZEICHNUNG] 2", "order": 1, "shortLabel": "L2" }
+  ],
+  "cards": [
+    {
+      "unitRef": "l1",
+      "front": "Haus",
+      "back": "بَيْتٌ",
+      "frontLang": "de",
+      "noteDe": "",
+      "noteAr": ""
+    }
+  ]
+}
+
+Regeln zum Schema:
+- Jede Einheit in "units" braucht eine eindeutige "id" (z. B. "l1", "l2", ...)
+  und einen sprechenden "name" nach dem Muster "[LEKTIONS-BEZEICHNUNG] N".
+- "order" zählt einfach von 0 aufwärts in Buchreihenfolge.
+- Jede Karte in "cards" referenziert über "unitRef" genau eine bestehende
+  Einheit-ID.
+- "frontLang" ist immer "de" (Ausgangssprache steht in "front").
+- Gib NUR das valide JSON aus, sonst nichts.
+</pre></div>
+          <button class="copybtn" type="button" data-copy="promptA" data-i18n="copyBtn">Prompt kopieren</button>
+        </article>
+
+        <article class="promptcard">
+          <h3 data-i18n="pBt">Variante B — Einfache Wortliste (CSV)</h3>
+          <p class="when" data-i18n="pBw">Wann? Wenn es einfach eine Liste von Wortpaaren ist. Alle Zeilen landen in EINEM Kapitel, das du vorher wählst — ohne Lektionsstruktur.</p>
+          <p class="howto" data-i18n="pBh">Danach in FushaCards: Hochladen → „CSV-Import" → Zielkapitel wählen → Datei hochladen.</p>
+          <p class="fill" data-i18n="pBf">Wer Notizen mitnehmen will (Plural, weitere Bedeutungen), nimmt Variante A — CSV überträgt nur die Wortpaare.</p>
+          <div class="prewrap" tabindex="0" role="group" aria-label="Prompt B"><pre id="promptB">
+Du bekommst eine PDF (oder Screenshots von PDF-Seiten) mit Vokabeln.
+Extrahiere daraus alle Vokabeln und gib sie als CSV-Text aus (Semikolon als
+Trennzeichen). Keine Erklärungen davor oder danach, nur den CSV-Text.
+
+WICHTIG — Vokalzeichen/Sonderzeichen:
+Falls die PDF-Textebene beim Kopieren Vokalzeichen (Fatha, Kasra, Damma,
+Shadda, Sukun) verliert, verschiebt oder durch falsche Zeichen ersetzt,
+verlasse dich NICHT auf den kopierten Text. Lies die Seiten stattdessen
+VISUELL (als Bild), so wie ein Mensch sie lesen würde. Erkennst du bereits
+beim ersten Testabschnitt, dass Vokalzeichen fehlen oder falsch aussehen,
+sag das kurz und bitte mich, die betroffenen Seiten stattdessen als
+Screenshots/Bilder hochzuladen statt als PDF-Datei.
+
+WAS EXTRAHIEREN:
+- Nur echte Vokabeleinträge (Wort + Übersetzung), keine Übungsanweisungen,
+  keine Grammatikerklärungen, keine vollständigen Beispielsätze aus dem
+  Fließtext.
+- Erfinde NIE Vokabeln oder Bedeutungen, die nicht im Original stehen.
+
+WIE JEDE ZEILE AUFGEBAUT WIRD (genau 2 Spalten, durch ; getrennt):
+Deutsch;Arabisch
+
+- Spalte 1 (Deutsch) = genau EIN Begriff, ohne Klammern/Sternchen, ohne
+  mehrere Bedeutungen aneinandergereiht.
+- Spalte 2 (Arabisch) = genau EIN Wort/Ausdruck, mit vollständiger
+  Vokalisierung, falls das Original sie hat.
+- Zusatzangaben (Plural, Genus, weitere Bedeutungen) gehören NICHT in die
+  CSV — wer sie mitnehmen will, nutzt die JSON-Variante.
+- Enthält ein Feld selbst ein Semikolon, setze es in doppelte
+  Anführungszeichen.
+- Erste Zeile ist die Kopfzeile: Deutsch;Arabisch
+
+Gib NUR den CSV-Text aus, sonst nichts.
+</pre></div>
+          <button class="copybtn" type="button" data-copy="promptB" data-i18n="copyBtn">Prompt kopieren</button>
+        </article>
+      </div>
     </section>
 
     <!-- Installation: ehrlich erklären, dass Android beim Sideload
@@ -356,6 +570,20 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
         </details>
       </div>
       <p class="update-note" data-i18n="updateNote">Bei einem Update einfach die neue APK darüber installieren — deine Karten und Kapitel bleiben erhalten.</p>
+
+      <!-- Stimmen für den Hörmodus: Android liefert Arabisch nicht ab
+           Werk mit, das muss einmal von Hand geholt werden. -->
+      <div class="subsect">
+        <h3 class="subhead" data-i18n="ttsHead">Vor dem ersten Hörmodus: Stimmen installieren</h3>
+        <p class="text" data-i18n="ttsIntro">Ohne diese Pakete bleibt das Vorlesen stumm; die App zeigt dann einen Hinweis mit demselben Absprung.</p>
+        <ol class="numsteps">
+          <li data-i18n="tts1">In der App: Einstellungen → Hörmodus → „Sprachpakete installieren (System)". Das öffnet die Android-Einstellungen an der richtigen Stelle.</li>
+          <li data-i18n="tts2">Als Modul „Google Sprachausgabe" wählen — dafür das Zahnrad daneben antippen.</li>
+          <li data-i18n="tts3">Unter „Sprachen" Deutsch UND Arabisch herunterladen.</li>
+          <li data-i18n="tts4">Zurück in die App: im Hörmodus die Stimme wählen und „Probe hören" antippen.</li>
+        </ol>
+        <p class="update-note" data-i18n="ttsNote">Android bringt Arabisch nicht ab Werk mit — einmal einrichten, danach funktioniert es dauerhaft, auch offline.</p>
+      </div>
     </section>
   </main>
 
@@ -389,15 +617,15 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
   /* Fallback = exakt der Stand der mitgelieferten latest.json.
      So sieht die Seite auch ohne Netz/Fetch vollständig aus. */
   var FALLBACK = {
-    versionName: '2.2.1',
-    versionCode: 1,
+    versionName: '1.4',
+    versionCode: 6,
     apkUrl: './downloads/FushaCards.apk',
     sizeMb: 21,
-    date: '2026-08-01',
+    date: '2026-08-02',
     notes: {
-      de: "Erste Android-Version: kompletter Funktionsumfang der iPhone-App — Karten scannen, FSRS-Wiederholung, Hörmodus, Qur'an-Modul, drei Sprachen.",
-      en: "First Android release: the full iPhone feature set — scan cards, FSRS review, listening mode, Qur'an module, three languages.",
-      es: "Primera versión para Android: todas las funciones del iPhone — escanear tarjetas, repaso FSRS, modo audio, módulo del Corán, tres idiomas."
+      de: 'Version 1.4: Updates sind jetzt in der App sichtbar — das Zahnrad zeigt einen Zähler, in den Einstellungen gibt es eine eigene Rubrik mit Direktlink zur Download-Seite. Neu auf dieser Seite: Anleitung für die Sprachpakete und zwei fertige KI-Prompts, mit denen sich Karteikarten aus einem Buch erstellen lassen.',
+      en: 'Version 1.4: updates are now visible inside the app — the gear icon shows a counter and settings has its own section with a direct link to the download page. New on this page: a guide for installing the voice packs and two ready-made AI prompts for turning a book into flashcards.',
+      es: 'Versión 1.4: las actualizaciones ahora se ven dentro de la app — el engranaje muestra un contador y los ajustes tienen su propia sección con enlace directo a la página de descarga. Nuevo en esta página: una guía para instalar los paquetes de voz y dos prompts de IA listos para convertir un libro en tarjetas.'
     }
   };
 
@@ -411,6 +639,30 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
       download: 'Herunterladen',
       videoCap: 'Das Erklärvideo · 1:44 Min.',
       newSince: 'Neue Version seit deinem letzten Besuch',
+      ovNotice: 'Stand der Android-Fassung',
+      noticeTitle: 'Die Android-Fassung wird noch ausgebaut',
+      noticeP1: 'Die App ist vollständig nutzbar, wächst aber weiter. Einen Punkt sagen wir offen, bevor du lädst.',
+      noticeP2: 'Die Scan- und Texterkennung für ARABISCH ist auf Android nicht optimal. Das iPhone bringt eine eingebaute arabische Texterkennung mit, Android hat keine — Googles Erkennung beherrscht Arabisch bis heute nicht. FushaCards nutzt deshalb einen offenen Ersatz (Tesseract): Lateinische Schrift liest er gut, arabische Schrift mit Vokalzeichen nur teilweise.',
+      noticeP3: 'Empfehlung: Erzeuge deine Karteikarten stattdessen mit einer KI (ChatGPT, Gemini, Claude) — Foto oder PDF hochladen oder den Text hineinkopieren, die fertige Datei herunterladen und in FushaCards importieren. Das ist der reguläre Importweg der App, keine Notlösung. Die fertigen Prompts dafür stehen weiter unten.',
+      ovAi: 'Karten aus dem Buch', hAi: 'Karten mit einer |KI| erstellen',
+      aiIntro: 'Lade ein Foto, einen Screenshot oder eine PDF deines Lehrbuchs bei ChatGPT, Gemini oder Claude hoch — oder kopiere den Text hinein — und stelle einen der beiden Prompts davor. Die Antwort speicherst du als Datei und importierst sie in FushaCards.',
+      aiLangNote: 'Beide Prompts sind bewusst auf Deutsch formuliert: So sind sie erprobt, und sie erzeugen deutsche Vokabelseiten. Füge sie unverändert ein.',
+      pAt: 'Variante A — Lehrbuch mit Kapiteln und Lektionen (JSON)',
+      pAw: 'Wann? Wenn dein Buch in Lektionen gegliedert ist. Der Prompt erzeugt ein komplettes Kapitel MIT Lektionen als Unterkapitel, inklusive Notizen (Plural, Genus, Verbformen).',
+      pAh: 'Danach in FushaCards: Hochladen → „Sicherung/Import" → Datei importieren.',
+      pAf: 'Vor dem Kopieren zwei Platzhalter ausfüllen: [KAPITELNAME] und [LEKTIONS-BEZEICHNUNG].',
+      pBt: 'Variante B — Einfache Wortliste (CSV)',
+      pBw: 'Wann? Wenn es einfach eine Liste von Wortpaaren ist. Alle Zeilen landen in EINEM Kapitel, das du vorher wählst — ohne Lektionsstruktur.',
+      pBh: 'Danach in FushaCards: Hochladen → „CSV-Import" → Zielkapitel wählen → Datei hochladen.',
+      pBf: 'Wer Notizen mitnehmen will (Plural, weitere Bedeutungen), nimmt Variante A — CSV überträgt nur die Wortpaare.',
+      copyBtn: 'Prompt kopieren', copyDone: 'Kopiert ✓', copyFail: 'Bitte von Hand markieren',
+      ttsHead: 'Vor dem ersten Hörmodus: Stimmen installieren',
+      ttsIntro: 'Ohne diese Pakete bleibt das Vorlesen stumm; die App zeigt dann einen Hinweis mit demselben Absprung.',
+      tts1: 'In der App: Einstellungen → Hörmodus → „Sprachpakete installieren (System)". Das öffnet die Android-Einstellungen an der richtigen Stelle.',
+      tts2: 'Als Modul „Google Sprachausgabe" wählen — dafür das Zahnrad daneben antippen.',
+      tts3: 'Unter „Sprachen" Deutsch UND Arabisch herunterladen.',
+      tts4: 'Zurück in die App: im Hörmodus die Stimme wählen und „Probe hören" antippen.',
+      ttsNote: 'Android bringt Arabisch nicht ab Werk mit — einmal einrichten, danach funktioniert es dauerhaft, auch offline.',
       ovWhatsNew: 'Was ist neu', hWhatsNew: 'Neue |Funktionen|',
       versionWord: 'Version',
       ovAbout: 'Über diese App', hAbout: 'Vom Buch zur |Karte.|',
@@ -437,6 +689,30 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
       download: 'Download',
       videoCap: 'The explainer video · 1:44 min',
       newSince: 'New version since your last visit',
+      ovNotice: 'State of the Android build',
+      noticeTitle: 'The Android version is still being built out',
+      noticeP1: 'The app is fully usable, but it keeps growing. One point should be said plainly before you download.',
+      noticeP2: 'Scanning and text recognition for ARABIC is not optimal on Android. The iPhone ships with built-in Arabic text recognition; Android has none — to this day Google’s recognition does not handle Arabic. FushaCards therefore uses an open substitute (Tesseract): it reads Latin script well, but Arabic script with vowel marks only partly.',
+      noticeP3: 'Recommendation: create your flashcards with an AI instead (ChatGPT, Gemini, Claude) — upload a photo or PDF, or paste the text in, download the finished file and import it into FushaCards. That is the app’s regular import path, not a workaround. The ready-made prompts are further down this page.',
+      ovAi: 'From book to cards', hAi: 'Create cards with an |AI|',
+      aiIntro: 'Upload a photo, a screenshot or a PDF of your textbook to ChatGPT, Gemini or Claude — or paste the text in — and put one of the two prompts in front of it. Save the answer as a file and import it into FushaCards.',
+      aiLangNote: 'Note: the prompt itself is in German in both variants. That is how they are tested, and they produce German vocabulary pages. Paste them unchanged — the AI will understand them whatever language you write in.',
+      pAt: 'Variant A — textbook with chapters and lessons (JSON)',
+      pAw: 'When? If your book is organised into lessons. The prompt produces a complete chapter WITH lessons as sub-chapters, including notes (plural, gender, verb forms).',
+      pAh: 'Then in FushaCards: Upload → “Backup/Import” → import the file.',
+      pAf: 'Fill in two placeholders before copying: [KAPITELNAME] (chapter name) and [LEKTIONS-BEZEICHNUNG] (word for “lesson”).',
+      pBt: 'Variant B — simple word list (CSV)',
+      pBw: 'When? If it is simply a list of word pairs. Every line goes into ONE chapter that you pick beforehand — no lesson structure.',
+      pBh: 'Then in FushaCards: Upload → “CSV import” → choose the target chapter → upload the file.',
+      pBf: 'If you want to keep notes (plural, further meanings), use variant A — CSV carries only the word pairs.',
+      copyBtn: 'Copy prompt', copyDone: 'Copied ✓', copyFail: 'Please select it by hand',
+      ttsHead: 'Before your first listening session: install the voices',
+      ttsIntro: 'Without these packages the reading aloud stays silent; the app then shows a notice with the same shortcut.',
+      tts1: 'In the app: Settings → Listening mode → “Install language packs (system)”. This opens Android’s settings at the right place.',
+      tts2: 'Choose “Google Text-to-Speech” as the engine — tap the gear icon next to it.',
+      tts3: 'Under “Languages”, download German AND Arabic.',
+      tts4: 'Back in the app: pick the voice in listening mode and tap “Play sample”.',
+      ttsNote: 'Android does not ship with Arabic out of the box — set it up once and it keeps working, offline too.',
       ovWhatsNew: "What's new", hWhatsNew: 'New |features|',
       versionWord: 'Version',
       ovAbout: 'About this app', hAbout: 'From book to |card.|',
@@ -463,6 +739,30 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
       download: 'Descargar',
       videoCap: 'El vídeo explicativo · 1:44 min',
       newSince: 'Nueva versión desde tu última visita',
+      ovNotice: 'Estado de la versión Android',
+      noticeTitle: 'La versión para Android aún se está ampliando',
+      noticeP1: 'La app se puede usar por completo, pero sigue creciendo. Hay un punto que decimos con claridad antes de que la descargues.',
+      noticeP2: 'El escaneo y el reconocimiento de texto en ÁRABE no son óptimos en Android. El iPhone trae reconocimiento de texto árabe integrado; Android no tiene ninguno — el reconocimiento de Google sigue sin dominar el árabe. Por eso FushaCards usa un sustituto abierto (Tesseract): lee bien la escritura latina, pero la árabe con vocalización solo en parte.',
+      noticeP3: 'Recomendación: crea tus tarjetas con una IA (ChatGPT, Gemini, Claude) — sube una foto o un PDF, o pega el texto, descarga el archivo resultante e impórtalo en FushaCards. Es la vía de importación normal de la app, no un apaño. Los prompts listos están más abajo.',
+      ovAi: 'Del libro a las tarjetas', hAi: 'Crear tarjetas con una |IA|',
+      aiIntro: 'Sube una foto, una captura o un PDF de tu libro a ChatGPT, Gemini o Claude — o pega el texto — y antepón uno de los dos prompts. Guarda la respuesta como archivo e impórtala en FushaCards.',
+      aiLangNote: 'Aviso: el prompt en sí está en alemán en ambas variantes. Así están probados y generan páginas de vocabulario en alemán. Pégalos sin cambios — la IA los entiende aunque tú escribas en otro idioma.',
+      pAt: 'Variante A — libro con capítulos y lecciones (JSON)',
+      pAw: '¿Cuándo? Si tu libro está dividido en lecciones. El prompt genera un capítulo completo CON lecciones como subcapítulos, incluidas las notas (plural, género, formas verbales).',
+      pAh: 'Después, en FushaCards: Subir → «Copia de seguridad/Importar» → importar el archivo.',
+      pAf: 'Antes de copiar, rellena dos comodines: [KAPITELNAME] (nombre del capítulo) y [LEKTIONS-BEZEICHNUNG] (la palabra para «lección»).',
+      pBt: 'Variante B — lista de palabras sencilla (CSV)',
+      pBw: '¿Cuándo? Si es simplemente una lista de pares de palabras. Todas las líneas van a UN capítulo que eliges antes — sin estructura de lecciones.',
+      pBh: 'Después, en FushaCards: Subir → «Importar CSV» → elegir el capítulo de destino → subir el archivo.',
+      pBf: 'Si quieres conservar las notas (plural, otros significados), usa la variante A — el CSV solo transmite los pares de palabras.',
+      copyBtn: 'Copiar prompt', copyDone: 'Copiado ✓', copyFail: 'Selecciónalo a mano, por favor',
+      ttsHead: 'Antes del primer modo audio: instalar las voces',
+      ttsIntro: 'Sin estos paquetes la lectura en voz alta se queda muda; la app muestra entonces un aviso con el mismo acceso directo.',
+      tts1: 'En la app: Ajustes → Modo audio → «Instalar paquetes de idioma (sistema)». Esto abre los ajustes de Android en el sitio correcto.',
+      tts2: 'Elige «Google Texto a voz» como motor — toca la rueda dentada que hay al lado.',
+      tts3: 'En «Idiomas», descarga alemán Y árabe.',
+      tts4: 'De vuelta en la app: elige la voz en el modo audio y toca «Escuchar muestra».',
+      ttsNote: 'Android no trae el árabe de fábrica — se configura una vez y luego funciona siempre, también sin conexión.',
       ovWhatsNew: 'Novedades', hWhatsNew: 'Nuevas |funciones|',
       versionWord: 'Versión',
       ovAbout: 'Sobre esta app', hAbout: 'Del libro a la |tarjeta.|',
@@ -590,6 +890,57 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
   var pills = document.querySelectorAll('.pill');
   for (var i = 0; i < pills.length; i++) {
     pills[i].addEventListener('click', function () { setLang(this.getAttribute('data-lang')); });
+  }
+
+  /* ---- „Prompt kopieren" -------------------------------------------
+     Der Text kommt IMMER aus pre.textContent — also zeichengenau das,
+     was auf der Seite steht, ohne Umbau. Erst die moderne Zwischen-
+     ablage, bei Ablehnung (kein HTTPS, ältere Browser) der alte
+     execCommand-Weg. Scheitert beides, sagen wir es ehrlich, statt
+     Erfolg vorzutäuschen. */
+  var copyTimers = {};
+  function flash(btn, key, ok) {
+    btn.textContent = STRINGS[lang][key];
+    if (ok) btn.classList.add('done');
+    var id = btn.getAttribute('data-copy');
+    clearTimeout(copyTimers[id]);
+    copyTimers[id] = setTimeout(function () {
+      btn.textContent = STRINGS[lang].copyBtn;
+      btn.classList.remove('done');
+    }, 2000);
+  }
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    /* außerhalb des Bildes parken, damit die Seite nicht springt */
+    ta.style.position = 'fixed';
+    ta.style.top = '0';
+    ta.style.left = '-9999px';
+    document.body.appendChild(ta);
+    var ok = false;
+    try {
+      ta.select();
+      ta.setSelectionRange(0, ta.value.length);
+      ok = document.execCommand('copy');
+    } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+  var copyBtns = document.querySelectorAll('.copybtn');
+  for (var c = 0; c < copyBtns.length; c++) {
+    copyBtns[c].addEventListener('click', function () {
+      var btn = this;
+      var pre = document.getElementById(btn.getAttribute('data-copy'));
+      if (!pre) return;
+      var text = pre.textContent;
+      function fallback() { var ok = legacyCopy(text); flash(btn, ok ? 'copyDone' : 'copyFail', ok); }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { flash(btn, 'copyDone', true); }, fallback);
+      } else {
+        fallback();
+      }
+    });
   }
 
   applyStrings();
