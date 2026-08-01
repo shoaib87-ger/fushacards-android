@@ -239,6 +239,14 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
   .hero{flex-direction:column;align-items:flex-start}
   .wm{font-size:38px}
 }
+
+/* Erklärvideo unter dem Download-Knopf: 16:9-Karte in der Markensprache.
+   preload="metadata" — die 15-MB-Datei lädt erst beim Abspielen. */
+.vidwrap{max-width:560px;margin:34px auto 0;padding:0 4px}
+.vidwrap video{display:block;width:100%;aspect-ratio:16/9;border-radius:18px;
+  background:#243c23;border:1px solid var(--c-border);box-shadow:var(--c-shadow)}
+.vidcap{margin-top:10px;text-align:center;font-size:13px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--c-ink-muted)}
 </style>
 </head>
 <body>
@@ -262,7 +270,7 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
       <div class="hero-text">
         <div class="ar-accent ar" lang="ar" aria-hidden="true">كَلِمَتي</div>
         <h1 class="wm">Fusha<span>Cards</span></h1>
-        <p class="dev">Dr. Shoaib</p>
+        <p class="dev">© Dr. Shoaib Seddiqi</p>
         <p class="tagline" data-i18n="tagline">Dein Wortschatz, aus deinem Material.</p>
       </div>
     </section>
@@ -288,6 +296,12 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
         </a>
       </div>
       <p class="dl-note" id="dlMeta">APK&nbsp;·&nbsp;21&nbsp;MB</p>
+    </div>
+
+    <!-- Das Erklärvideo (1:44) — auf Wunsch direkt unter dem Download. -->
+    <div class="vidwrap reveal" style="--d:.21s">
+      <video controls playsinline preload="metadata" src="./erklaervideo.mp4"></video>
+      <p class="vidcap" data-i18n="videoCap">Das Erklärvideo · 1:44 Min.</p>
     </div>
 
     <!-- Neue Funktionen: Text kommt aus latest.json (notes.<sprache>) -->
@@ -395,6 +409,7 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
       tagline: 'Dein Wortschatz, aus deinem Material.',
       statVersion: 'Version', statSize: 'Größe',
       download: 'Herunterladen',
+      videoCap: 'Das Erklärvideo · 1:44 Min.',
       newSince: 'Neue Version seit deinem letzten Besuch',
       ovWhatsNew: 'Was ist neu', hWhatsNew: 'Neue |Funktionen|',
       versionWord: 'Version',
@@ -420,6 +435,7 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
       tagline: 'Your vocabulary, from your material.',
       statVersion: 'Version', statSize: 'Size',
       download: 'Download',
+      videoCap: 'The explainer video · 1:44 min',
       newSince: 'New version since your last visit',
       ovWhatsNew: "What's new", hWhatsNew: 'New |features|',
       versionWord: 'Version',
@@ -445,6 +461,7 @@ footer{margin-top:56px;padding-top:22px;border-top:1px solid var(--c-hairline);
       tagline: 'Tu vocabulario, de tu material.',
       statVersion: 'Versión', statSize: 'Tamaño',
       download: 'Descargar',
+      videoCap: 'El vídeo explicativo · 1:44 min',
       newSince: 'Nueva versión desde tu última visita',
       ovWhatsNew: 'Novedades', hWhatsNew: 'Nuevas |funciones|',
       versionWord: 'Versión',
