@@ -1,12 +1,12 @@
 {
-  "versionName": "1.1",
-  "versionCode": 3,
+  "versionName": "1.2",
+  "versionCode": 4,
   "apkUrl": "./downloads/FushaCards.apk",
   "sizeMb": 21,
   "date": "2026-08-01",
   "notes": {
-    "de": "Version 1.1: Scans werden in voller Auflösung erkannt und scharf angezeigt, Überspringen im Intro ist jetzt gut erreichbar, die Spracherkennung im Hörmodus funktioniert ohne vorinstallierte Offline-Sprachpakete, und in den Hörmodus-Einstellungen gibt es einen direkten Absprung zum Installieren der Google-Sprachstimmen (Deutsch/Arabisch).",
-    "en": "Version 1.1: scans are recognized at full resolution and displayed sharply, the intro skip button is now easy to reach, speech recognition in listening mode works without pre-installed offline language packs, and the listening-mode settings now link directly to installing the Google voices (German/Arabic).",
-    "es": "Versión 1.1: los escaneos se reconocen a resolución completa y se muestran nítidos, el botón de saltar la intro ahora es fácil de alcanzar, el reconocimiento de voz del modo audio funciona sin paquetes de idioma sin conexión preinstalados, y los ajustes del modo audio enlazan directamente con la instalación de las voces de Google (alemán/árabe)."
+    "de": "Version 1.2: Die Texterkennung beim Scannen wurde systematisch nachgemessen und verbessert — arabische Wörter werden nicht mehr fälschlich verworfen, Buchstaben-Kauderwelsch wird herausgefiltert, und unsichtbare Steuerzeichen landen nicht mehr auf den Karten. Außerdem prüft die App jetzt alle 12 statt 24 Stunden auf neue Versionen.",
+    "en": "Version 1.2: scan text recognition was systematically measured and improved — Arabic words are no longer wrongly discarded, garbled letter noise is filtered out, and invisible control characters no longer end up on your cards. The app now also checks for new versions every 12 hours instead of 24.",
+    "es": "Versión 1.2: el reconocimiento de texto al escanear se midió y mejoró sistemáticamente — las palabras árabes ya no se descartan por error, el ruido de letras sin sentido se filtra, y los caracteres de control invisibles ya no acaban en tus tarjetas. Además, la app ahora comprueba nuevas versiones cada 12 horas en lugar de 24."
   }
 }
